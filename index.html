@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vídeo en Bucle</title>
+    <title>Vídeos en Bucle</title>
     <style>
         body, html {
             height: 100%;
@@ -23,23 +23,34 @@
     </style>
 </head>
 <body>
-    <video id="video" autoplay loop muted playsinline>
-        <source src="7.mp4" type="video/mp4">
-        <source src="tu-video.webm" type="video/webm">
-        Tu navegador no soporta este video.
+    <video id="video" autoplay muted playsinline>
+        <source id="videoSource" src="7.mp4" type="video/mp4">
     </video>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const video = document.getElementById("video");
+            const source = document.getElementById("videoSource");
 
-            // Reintentar la reproducción si el autoplay falla
+            // Lista de videos en orden
+            const videos = ["7.mp4"];
+            let currentIndex = 0;
+
+            function playNextVideo() {
+                currentIndex = (currentIndex + 1) % videos.length; // Alterna entre los videos
+                source.src = videos[currentIndex];
+                video.load(); // Recarga el video
+                video.play(); // Lo reproduce
+            }
+
+            video.addEventListener("ended", playNextVideo); // Cambia al siguiente cuando termina
+
+            // Asegurar que el autoplay funcione
             video.play().catch(error => {
-                console.log("El navegador bloqueó el autoplay, intentando reproducir de nuevo...");
+                console.log("Autoplay bloqueado, reintentando...");
                 setTimeout(() => video.play(), 1000);
             });
 
-            // Forzar carga rápida
             video.preload = "auto";
         });
     </script>
