@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeo en Bucle</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none; /* Evita la interacción del usuario con el vídeo */
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="video" autoplay loop muted preload="auto">
+            <source src="tu-video.mp4" type="7.mp4">
+            Tu navegador no soporta el formato de video.
+        </video>
+    </div>
+    <script>
+        const video = document.getElementById('video');
+
+        // Función para poner el video en pantalla completa
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'f' || e.key === 'F') {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari y Opera
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                    document.documentElement.msRequestFullscreen();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
